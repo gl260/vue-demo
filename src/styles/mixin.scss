@@ -1,0 +1,19 @@
+// 定义namespace 变量为 gl
+$namespace: "gl";
+
+// 使用 Mixin 注册一个可以重复使用的模块b 可以通过传进来的 block 生成新的变量 $B，并且变量会渲染在 class 上
+@mixin b($block) {
+  $B: $namespace + "-" + $block !global;
+  .#{$B} {
+    @content;
+  }
+}
+
+// 注册了 when 可以新增 class 选择器，实现多个 class 的样式。
+@mixin when($state) {
+  @at-root {
+    &.#{$state-prefix + $state} {
+      @content;
+    }
+  }
+}

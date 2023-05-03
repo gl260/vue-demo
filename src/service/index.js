@@ -1,0 +1,32 @@
+import axios from "axios";
+
+// 1.类的构造器
+// 2.类的实例方法
+class GlRequest {
+  constructor(baseURL, timeout = 10000) {
+    this.instance = axios.create({
+      baseURL,
+      timeout,
+    });
+  }
+  request(config) {
+    return new Promise((resolve, reject) => {
+      this.instance
+        .request(config)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+  get(config) {
+    return this.request({ ...config, method: "get" });
+  }
+  post(config) {
+    return this.request({ ...config, method: "post" });
+  }
+}
+
+export default new GlRequest("http://127.0.0.1:5173");
